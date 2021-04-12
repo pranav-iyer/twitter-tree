@@ -1,20 +1,16 @@
-const SearchForm = () => {
+const SearchBar = (props) => {
 
 
-    return (
-        <form action="/tree/" method="get">
-            <label htmlFor="main-search">
-                <span className='visually-hidden'>Paste Tweet URL here</span>
-            </label>
-            <input
-                type="text"
-                id="main-search"
-                name="tweet-id"
-                placeholder="Paste Tweet URL here..."
-            />
-            <button type="submit">Make Tree!</button>
-        </form>
-    )
+	return (
+		<form onSubmit={props.handleSearchSubmit}>
+			<input
+				placeholder="Paste Tweet URL here..."
+				value={props.searchText}
+				onChange={props.handleSearchTextChange}
+			/>
+			<button type="submit">Make Tree!</button>
+		</form>
+	)
 }
 
-export default SearchForm;
+export default SearchBar;
