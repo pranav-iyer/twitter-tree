@@ -7,7 +7,6 @@ import { useState } from 'react'
 function App() {
   const [searchText, setSearchText] = useState("pranav");
   const [requestedID, setRequestedID] = useState("0");
-  const [isWaiting, setIsWaiting] = useState(false);
 
   const parseURL = (rawURL) => {
     var parsedID = rawURL;
@@ -29,10 +28,6 @@ function App() {
     setSearchText(e.target.value);
   };
 
-  const handleIsWaitingChange = (e) => {
-    setIsWaiting(e.target.value);
-  };
-
   return (
     <div className="App">
       <SearchBar
@@ -42,8 +37,6 @@ function App() {
       />
       <TreeView
         requestedID={requestedID}
-        isWaiting={isWaiting}
-        handleIsWaitingChange={handleIsWaitingChange}
       />
     </div>
   );
