@@ -5,7 +5,7 @@ const Title = (props) => {
     return (
       <div className="title flex-container">
         <img
-          src="./logo_large.svg"
+          src="./logo_small.svg"
           className="logo"
           alt="Twitter Tree Logo"
         />
