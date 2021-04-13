@@ -23,7 +23,13 @@ const TreeView = (props) => {
       if (!isLoaded) {
         loadSVG()
       } else {
-        return <img src={`data:image/svg+xml,${svg}`} alt="Tree of replies to supplied tweet" />
+        return (
+          <img
+            src={`data:image/svg+xml,${svg}`}
+            alt="Tree of replies to supplied tweet"
+            class="full-width"
+          />
+        )
       }
     } else {
       return <p className="loading"> Loading .... </p>

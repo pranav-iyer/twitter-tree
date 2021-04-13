@@ -2,13 +2,16 @@ const SearchBar = (props) => {
 
   if (!props.searchRequested) {
   	return (
-  		<form onSubmit={props.handleSearchSubmit}>
+  		<form
+        onSubmit={props.handleSearchSubmit}
+        className="flex-container"
+      >
         <label htmlFor="main-search">
           <span className="visually-hidden">Paste a Tweet URL here</span>
         </label>
   			<input
           id="main-search"
-  				placeholder="Paste a Tweet URL here..."
+  				placeholder="Paste Tweet URL here..."
   				value={props.searchText}
   				onChange={props.handleSearchTextChange}
   			/>

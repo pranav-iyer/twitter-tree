@@ -1,5 +1,13 @@
 .App {
   text-align: center;
+  padding:15% 0 0 0;
+}
+
+.flex-container {
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .App-logo {
@@ -34,16 +42,13 @@
 }
 
 input {
-  width: 50%;
-  font-size: 2.5em;
-  padding: 3% 5%;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
+  width: 400px;
+  height: 30px;
+  font-size: 2em;
+  padding: 15px 30px;
   border: 0;
-  border-radius: 50px;
+  border-radius: 60px;
+  margin: 10px 0 10px 0;
 }
 
 input:focus {
@@ -52,14 +57,9 @@ input:focus {
 }
 
 button {
-  height: 8%;
-  width: 12%;
-  position: absolute;
-  top: 65%;
-  left: 50%;
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-  background-color: #a283b9;
+  height: 50px;
+  width: 200px;
+  background-color: #7e75f5;
   color: white;
   border:0;
   border-radius: 50px;
@@ -85,3 +85,16 @@ body {
   font-size: 2.5em;
 }
 
+.full-width {
+  width:1600px;
+  align-items: left;
+}
+
+.title {
+  font-size: 1.5em;
+}
+
+.logo {
+  max-height: 100px;
+
+}

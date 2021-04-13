@@ -1,6 +1,7 @@
 import './App.css';
 import SearchBar from './search'
 import TreeView from './treeview'
+import Title from './title'
 import { useState } from 'react'
 
 
@@ -30,12 +31,17 @@ function App() {
 
   return (
     <div className="App">
-      <SearchBar
-        searchText={searchText}
-        searchRequested={requestedID !== "0"}
-        handleSearchTextChange={handleSearchTextChange}
-        handleSearchSubmit={handleSearchSubmit}
-      />
+      <div className="flex-container">
+        <Title
+          searchRequested={requestedID !== "0"}
+        />
+        <SearchBar
+          searchText={searchText}
+          searchRequested={requestedID !== "0"}
+          handleSearchTextChange={handleSearchTextChange}
+          handleSearchSubmit={handleSearchSubmit}
+        />
+      </div>
       <TreeView
         requestedID={requestedID}
       />
