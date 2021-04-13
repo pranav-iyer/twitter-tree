@@ -1,6 +1,6 @@
 const SearchBar = (props) => {
 
-  if (!props.searchRequested) {
+  if (props.toDisplay) {
   	return (
   		<form
         onSubmit={props.handleSearchSubmit}
@@ -15,7 +15,13 @@ const SearchBar = (props) => {
   				value={props.searchText}
   				onChange={props.handleSearchTextChange}
   			/>
-  			<button type="submit">Make Tree!</button>
+  			<button
+          type="submit"
+          disabled={props.buttonDisabled}
+        >
+          {!props.buttonDisabled && "Make Tree"}
+          {props.buttonDisabled && "Making Tree..."}
+        </button>
   		</form>
   	)
   } else {

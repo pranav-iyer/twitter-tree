@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import JsonResponse
+from django.http import JsonResponse, Http404
 from .models import Tree
 from .replytree import ReplyTree
 
@@ -10,9 +10,13 @@ def tree_view(request, origin_id):
         t = Tree(origin_id_str=origin_id, svg="")
         t.save()
 
-        # create ReplyTree (this is the step that takes time)
-        rt = ReplyTree(str(origin_id))
-        rt.populate_tree()
+        try:
+            # create ReplyTree (this is the step that takes time)
+            rt = ReplyTree(str(origin_id))
+            rt.populate_tree()
+        except:
+            t.delete()
+            raise Http404("Requested origin_id not found.")
 
         # update db entry
         t.svg = rt.get_svg()

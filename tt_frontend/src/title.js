@@ -1,16 +1,16 @@
 const Title = (props) => {
-  if (props.searchRequested) {
-    return <div></div>
-  } else {
+  if (props.toDisplay) {
     return (
       <div className="title flex-container">
         <img
-          src="./logo_small.svg"
+          src="./logo_large.svg"
           className="logo"
           alt="Twitter Tree Logo"
         />
       </div>
     )
+  } else {
+    return <div></div>
   }
 }
 

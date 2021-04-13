@@ -43,8 +43,8 @@
 
 input {
   width: 400px;
-  height: 30px;
-  font-size: 2em;
+  height: 20px;
+  font-size: 1em;
   padding: 15px 30px;
   border: 0;
   border-radius: 60px;
@@ -53,7 +53,7 @@ input {
 
 input:focus {
   outline: none;
-  box-shadow: 0 0 3pt 2pt pink;
+  box-shadow: 0 0 0 1pt #7e75f5;
 }
 
 button {
@@ -63,12 +63,16 @@ button {
   color: white;
   border:0;
   border-radius: 50px;
-  font-size: 1.5em;
+  font-size: 1em;
+}
+
+button:disabled {
+  opacity: 0.5;
 }
 
 button:focus {
   outline:none;
-  box-shadow: 0 0 3pt 2pt pink;
+  box-shadow: 0 0 0 1pt #5146f1;
 }
 
 body {
@@ -86,7 +90,7 @@ body {
 }
 
 .full-width {
-  width:1600px;
+  max-width:1600px;
   align-items: left;
 }
 
