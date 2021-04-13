@@ -5,7 +5,7 @@ import { useState } from 'react'
 
 
 function App() {
-  const [searchText, setSearchText] = useState("pranav");
+  const [searchText, setSearchText] = useState("");
   const [requestedID, setRequestedID] = useState("0");
 
   const parseURL = (rawURL) => {
@@ -32,6 +32,7 @@ function App() {
     <div className="App">
       <SearchBar
         searchText={searchText}
+        searchRequested={requestedID !== "0"}
         handleSearchTextChange={handleSearchTextChange}
         handleSearchSubmit={handleSearchSubmit}
       />

@@ -6,13 +6,16 @@ const TreeView = (props) => {
   const [svg, setSVG] = useState();
 
   const loadSVG = () => {
+    console.log("loading svg...");
     // load in the svg data from the server
     setIsLoading(true);
     setIsLoaded(true);
+
+    console.log("sending fetch request to api")
     fetch('http://localhost:8000/tree/' + props.requestedID)
       .then(response => response.json())
-      .then(data => setSVG(encodeURIComponent(data.svg)))
-      .then(data => setIsLoading(false))
+      .then(json => setSVG(encodeURIComponent(json.svg)))
+      .then(() => setIsLoading(false))
   }
 
   if (props.requestedID !== "0") {
@@ -23,10 +26,10 @@ const TreeView = (props) => {
         return <img src={`data:image/svg+xml,${svg}`} alt="Tree of replies to supplied tweet" />
       }
     } else {
-      return <p> Loading .... </p>
+      return <p className="loading"> Loading .... </p>
     }
   } else {
-    return <p>No ID submitted</p>
+    return <p></p>
   }
 }
 
