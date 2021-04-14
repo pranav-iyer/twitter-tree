@@ -11,6 +11,7 @@ function App() {
   const [svg, setSVG] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [requestSent, setRequestSent] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const parseURL = (rawURL) => {
     var parsedID = rawURL;
@@ -19,12 +20,21 @@ function App() {
       parsedID = parsedID.slice(0, lastQuestion)
     }
     parsedID = parsedID.slice(parsedID.lastIndexOf("/")+1);
-    return parsedID
+    return parsedID;
   };
 
   const handleSearchSubmit = (e) => {
-    e.preventDefault()
-    setRequestedID(parseURL(searchText));
+    e.preventDefault();
+    //clear error message on resubmit
+    setErrorMessage("");
+
+    //error checking
+    const parseResult = parseURL(searchText);
+    if (isNaN(parseResult)) {
+      setErrorMessage("Unable to parse URL—make sure you pasted the right link!");
+      return;
+    }
+    setRequestedID(parseResult);
   };
 
 
@@ -42,10 +52,11 @@ function App() {
       console.log("sending fetch request to api")
       fetch('http://localhost:8000/tree/' + requestedID)
         .then((response) => {
-          if (response.ok) {
-            return response.json()
-          } else {
-            throw new Error("Request denied by server.");
+          if (response.status === 200) {
+            console.log(response);
+            return response.json();
+          } else if (response.status === 404) {
+            throw new Error("Tweet not found. Check the URL, and make sure the tweet isn't private!");
           }
         })
         .then((json) => {
@@ -58,8 +69,10 @@ function App() {
           setIsLoading(false);
           setRequestSent(false);
           setRequestedID("0");
+          setErrorMessage(error.toString().slice(6));
         })
     }
+    // eslint-disable-next-line
   }, [requestedID])
 
   return (
@@ -75,6 +88,7 @@ function App() {
           toDisplay={!requestSent || isLoading}
           buttonDisabled={requestSent}
         />
+        {errorMessage && <div className="error">{errorMessage}</div>}
       </div>
       <TreeView
         toDisplay={requestSent && !isLoading}

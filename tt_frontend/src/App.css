@@ -1,3 +1,10 @@
+/*
+color scheme:
+maroon: #995d82;
+green: #a4ef79;
+purple: #7e75f5;
+*/
+
 .App {
   text-align: center;
   padding:15% 0 0 0;
@@ -100,5 +107,11 @@ body {
 
 .logo {
   max-height: 100px;
+}
 
+.error {
+  color: #995d82;
+  font-size: 0.8em;
+  padding: 10px 0 0 0;
+  font-weight: bold;
 }

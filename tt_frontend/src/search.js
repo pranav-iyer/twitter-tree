@@ -1,3 +1,5 @@
+import {Motion, spring, presets} from 'react-motion';
+
 const SearchBar = (props) => {
 
   if (props.toDisplay) {
@@ -14,6 +16,7 @@ const SearchBar = (props) => {
   				placeholder="Paste Tweet URL here..."
   				value={props.searchText}
   				onChange={props.handleSearchTextChange}
+          autofocus="true"
   			/>
   			<button
           type="submit"
