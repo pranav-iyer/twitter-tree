@@ -52,6 +52,7 @@ function App() {
       console.log("sending fetch request to api")
       fetch('http://localhost:8000/tree/' + requestedID)
         .then((response) => {
+          console.log(response.status);
           if (response.status === 200) {
             console.log(response);
             return response.json();
@@ -69,7 +70,11 @@ function App() {
           setIsLoading(false);
           setRequestSent(false);
           setRequestedID("0");
-          setErrorMessage(error.toString().slice(6));
+          if (error.toString().slice(0,9) === "TypeError") {
+            setErrorMessage("Server is down :(. Try again later.")
+          } else {
+            setErrorMessage(error.toString().slice(6));
+          }
         })
     }
     // eslint-disable-next-line

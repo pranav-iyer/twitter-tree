@@ -1,5 +1,3 @@
-import {Motion, spring, presets} from 'react-motion';
-
 const SearchBar = (props) => {
 
   if (props.toDisplay) {
