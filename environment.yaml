@@ -1,6 +1,7 @@
 name: ttree
 channels:
   - defaults
+  - conda-forge
 dependencies:
   - flask
   - pygraphviz

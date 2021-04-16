@@ -1,30 +1,30 @@
 const SearchBar = (props) => {
 
   if (props.toDisplay) {
-  	return (
-  		<form
+    return (
+      <form
         onSubmit={props.handleSearchSubmit}
         className="flex-container"
       >
         <label htmlFor="main-search">
           <span className="visually-hidden">Paste a Tweet URL here</span>
         </label>
-  			<input
+        <input
           id="main-search"
-  				placeholder="Paste Tweet URL here..."
-  				value={props.searchText}
-  				onChange={props.handleSearchTextChange}
+          placeholder="Paste Tweet URL here..."
+          value={props.searchText}
+          onChange={props.handleSearchTextChange}
           autofocus="true"
-  			/>
-  			<button
+        />
+        <button
           type="submit"
           disabled={props.buttonDisabled}
         >
           {!props.buttonDisabled && "Make Tree"}
           {props.buttonDisabled && "Making Tree..."}
         </button>
-  		</form>
-  	)
+      </form>
+    )
   } else {
     return <div></div>
   }
