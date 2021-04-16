@@ -1,5 +1,4 @@
 const SearchBar = (props) => {
-
   if (props.toDisplay) {
     return (
       <form

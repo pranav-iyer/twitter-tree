@@ -12,6 +12,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [requestSent, setRequestSent] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [buttonShake, setButtonShake] = useState(false);
 
   const parseURL = (rawURL) => {
     var parsedID = rawURL;
@@ -31,6 +32,8 @@ function App() {
     //error checking
     const parseResult = parseURL(searchText);
     if (isNaN(parseResult)) {
+      //shake button and do not submit the search
+      setButtonShake(true);
       setErrorMessage("Unable to parse URL—make sure you pasted the right link!");
       return;
     }
@@ -40,6 +43,10 @@ function App() {
 
   const handleSearchTextChange = (e) => {
     setSearchText(e.target.value);
+  };
+
+  const stopButtonShake = (e) => {
+    setButtonShake(false);
   };
 
   useEffect(() => {
@@ -66,7 +73,8 @@ function App() {
         })
         .catch((error) => {
           console.log(error);
-          //reset state to original
+          //shake button and reset state to original
+          setButtonShake(true);
           setIsLoading(false);
           setRequestSent(false);
           setRequestedID("0");
@@ -92,6 +100,8 @@ function App() {
           handleSearchSubmit={handleSearchSubmit}
           toDisplay={!requestSent || isLoading}
           buttonDisabled={requestSent}
+          buttonShake={buttonShake}
+          stopButtonShake={stopButtonShake}
         />
         {errorMessage && <div className="error">{errorMessage}</div>}
       </div>
