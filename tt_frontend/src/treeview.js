@@ -2,11 +2,7 @@ const TreeView = (props) => {
 
   if (props.toDisplay) {
     return (
-      <img
-        src={`data:image/svg+xml,${props.svg}`}
-        alt="Tree of replies to supplied tweet"
-        className="full-width"
-      />
+      <div dangerouslySetInnerHTML={{__html: props.svg}}></div>
     )
   } else {
     return <div></div>

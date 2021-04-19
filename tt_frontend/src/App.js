@@ -68,7 +68,7 @@ function App() {
           }
         })
         .then((json) => {
-          setSVG(encodeURIComponent(json.svg));
+          setSVG(json.svg);
           setIsLoading(false);
         })
         .catch((error) => {

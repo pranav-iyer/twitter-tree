@@ -5,6 +5,7 @@ import logging
 import textwrap
 import json
 import io
+import re
 logging.basicConfig(level=logging.INFO)
 # helper function to get the hex code of the plt colormap
 # at a given index
@@ -31,13 +32,6 @@ def get_color(num):
             return "#" + color
     else:
         return "#"+''.join([hex(int(c * 255))[2:] for c in color_tup[:-1]])
-
-def load_auth(filename='auth.txt'):
-    with open(filename, "r") as f:
-        lines = [l[:-1] for l in f.readlines()]
-        auth = tweepy.OAuthHandler(*lines[:2])
-        auth.set_access_token(*lines[2:])
-    return auth
 
 def extract_id(url):
     id_str = url
@@ -270,5 +264,36 @@ class ReplyTree():
     def get_svg(self):
         reader = io.BytesIO()
         self.graph.draw(reader, format="svg", prog='dot')
-        return reader.getvalue().decode()
+        raw_svg = reader.getvalue().decode()
+
+        # make the tweet-bubbles clickable (hopefully)
+        # add in links (username links to profile, tweet body links to status)
+        username_blocks = [(m.start(), m.end()) for m in re.finditer('<text .*>@.*</text>', raw_svg)]
+        id_blocks = [(m.start()+5, m.end()-4) for m in re.finditer('<!-- [0-9]* -->', raw_svg)]
+        text_blocks = [(m.start(), m.end()-9) for m in re.finditer('<text (.|\n)*?<polygon', raw_svg)]
+
+        user_linked_svg = ""
+        last_index = 0
+        for (u_start,u_end), (i_start,i_end), (t_start,t_end) in zip(username_blocks, id_blocks, text_blocks):
+            # locate the actual username in the username block
+            m = re.search('@.*</', raw_svg[u_start:u_end])
+            uname = raw_svg[u_start:u_end][m.start()+1:m.end()-2]
+
+            # get id
+            tweet_id = raw_svg[i_start:i_end]
+
+            # add in the links to the raw svg
+            # link username to profile
+            user_linked_svg += raw_svg[last_index:u_start] + f'<a href="https://twitter.com/{uname}" target="_blank" rel="noopener noreferrer">'
+            user_linked_svg += raw_svg[u_start:u_end] + '</a>'
+
+            # link text to tweet
+            user_linked_svg += f'<a href="https://twitter.com/{uname}/status/{tweet_id}" target="_blank" rel="noopener noreferrer">'
+            user_linked_svg += raw_svg[u_end:t_end] + '</a>'
+
+            last_index = t_end
+
+        user_linked_svg += raw_svg[last_index:]
+
+        return user_linked_svg
 
