@@ -6,6 +6,7 @@ import textwrap
 import json
 import io
 import re
+from queue import Queue
 logging.basicConfig(level=logging.INFO)
 # helper function to get the hex code of the plt colormap
 # at a given index
@@ -205,26 +206,26 @@ class ReplyTree():
         repls = self.reply_cache.get_replies(node.tweet)
         node.update_children(repls)
 
-    def pop_tree_recursive(self, node):
-        # populate children list
-        self.populate_replies_of_node(node)
+    def pop_tree_iterative(self):
+        vertices_to_check = Queue(maxsize=50)
+        vertices_to_check.put(self.origin)
+        self.add_node_to_graph(self.origin)
+        while not vertices_to_check.empty():
+            self.number_of_nodes += 1
+            current_node = vertices_to_check.get()
 
-        if node.name not in self.colors.keys():
-            self.colors[node.name] = get_color(len(self.colors.keys()))
+            self.populate_replies_of_node(current_node)
 
-        if len(node.children) > 0:
-            for c in node.children:
-                self.number_of_nodes += 1
-                self.pop_tree_recursive(c)
+            if len(current_node.children) > 0:
+                for child in current_node.children:
+                    vertices_to_check.put(child)
+                    self.add_node_to_graph(child)
+                    self.add_edge_to_graph(current_node, child)
 
     def populate_tree(self):
-        
         if not self.is_populated:
-            self.pop_tree_recursive(self.origin)
+            self.pop_tree_iterative()
             logging.info(f"Tree populated with {self.number_of_nodes} nodes.")
-
-            self.add_node_to_graph(self.origin)
-            self.draw_tree_recursive(self.origin)
 
             self.is_populated = True
 
@@ -236,19 +237,15 @@ class ReplyTree():
             n.attr['label'] = node.to_html(orig=orig)
             n.attr['shape'] = 'rect'
             n.attr['style'] = 'filled, rounded'
+
+            if node.name not in self.colors.keys():
+                self.colors[node.name] = get_color(len(self.colors.keys()))
             n.attr['fillcolor'] = self.colors[node.name]
 
     def add_edge_to_graph(self, node1, node2):
         if not self.graph.has_edge(node1.id_str, node2.id_str):
             self.graph.add_edge(node1.id_str, node2.id_str)
             e = self.graph.get_edge(node1.id_str, node2.id_str)
-
-    def draw_tree_recursive(self, node):
-        if len(node.children) > 0:
-            for c in node.children:
-                self.add_node_to_graph(c)
-                self.add_edge_to_graph(node, c)
-                self.draw_tree_recursive(c)
 
     def save(self):
         self.graph.write(self.savedir + self.origin.id_str + "_tree.dot")
