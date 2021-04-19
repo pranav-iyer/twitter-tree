@@ -218,6 +218,7 @@ class ReplyTree():
                 self.pop_tree_recursive(c)
 
     def populate_tree(self):
+        
         if not self.is_populated:
             self.pop_tree_recursive(self.origin)
             logging.info(f"Tree populated with {self.number_of_nodes} nodes.")
