@@ -4,5 +4,6 @@ A basic app that lets you visualize trees of replies to tweets. Written in Djang
 
 It traverses through all the replies to a tweet, and the replies to those replies, and so on ... until you get something that looks like this:
 
-![twitter_tree_demo3](https://user-images.githubusercontent.com/25040701/115425874-02f6dd80-a1ce-11eb-896b-f259612f4202.gif)
+![twitter_tree_demo4](https://user-images.githubusercontent.com/25040701/115449233-92a98580-a1e8-11eb-8830-21eae9107b60.gif)
+
 
