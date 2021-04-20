@@ -11,6 +11,11 @@ https://user-images.githubusercontent.com/25040701/115449879-3eeb6c00-a1e9-11eb-
 
 Right now I got it working in Ubuntu and on Mac OS 10.15.4—no idea what will happen if you try it on windows (it probably won't work for some reason or the other).
 
+Dependencies:
+- conda
+- npm
+- (I think that is it)
+
 In order to run right now, here is what you have to do:
 
 1. create conda environment:
