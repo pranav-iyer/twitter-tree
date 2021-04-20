@@ -20,7 +20,7 @@ In order to run right now, here is what you have to do:
 
 1. create conda environment:
 ```
-conda create -f environment.yaml
+conda env create -f environment.yaml
 ```
 2. start django server:
 ```
