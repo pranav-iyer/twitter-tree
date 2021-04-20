@@ -29,4 +29,4 @@ cd tt_frontend
 npm install
 npm start
 ```
-4. Open up in your web browser (http://localhost:3000) and check it out!
+4. Open up in your web browser http://localhost:3000 and check it out!
