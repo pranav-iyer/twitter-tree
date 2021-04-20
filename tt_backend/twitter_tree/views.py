@@ -16,7 +16,7 @@ def tree_view(request, origin_id):
             rt.populate_tree()
         except:
             t.delete()
-            raise
+            raise Http404("Tweet with corresponding origin_id not found.")
         # update db entry
         t.svg = rt.get_svg()
         t.save()
